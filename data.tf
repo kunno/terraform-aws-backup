@@ -3,6 +3,7 @@ data "aws_kms_alias" "backup_primary" {
 }
 
 data "aws_kms_alias" "backup_secondary" {
+  count    = var.enable_cross_region_vault ? 1 : 0
   provider = aws.west
   name     = "alias/aws/backup"
 }

@@ -26,7 +26,7 @@ resource "aws_backup_vault" "backup_cross_region_vault" {
   count       = var.enable_cross_region_vault ? 1 : 0
   provider    = aws.west
   name        = format("backup-vault-%s-%s-%s", var.bu_prefix, var.name, var.environment)
-  kms_key_arn = try(var.cross_region_kms_key_id, data.aws_kms_alias.backup_secondary.arn)
+  kms_key_arn = try(var.cross_region_kms_key_id, data.aws_kms_alias[count.index].backup_secondary.arn)
 
   tags = {
     Name        = format("backup-vault-%s-%s-%s", var.bu_prefix, var.name, var.environment),
